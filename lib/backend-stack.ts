@@ -5,6 +5,8 @@ import { Construct } from 'constructs';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class BackendStack extends cdk.Stack {
+  public readonly currentTable: Table;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -15,6 +17,7 @@ export class BackendStack extends cdk.Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
       timeToLiveAttribute: 'expiredAt',
     });
+    this.currentTable = currentTable;
 
     // ecs
     const cluster = new Cluster(this, 'BackendCluster', {
